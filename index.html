@@ -140,7 +140,13 @@ document.addEventListener("click",function(e){
   var a=t.dataset.act,id=t.dataset.id;
   if(a==="close"){if(e.target===t||t.tagName==="BUTTON")close();return}
   e.stopPropagation();
-  if(a==="newp")newPerson();
+  if(a==="savecode"){
+    var c=$("#f-code").value.trim().toLowerCase().replace(/\s+/g,"-");
+    if(c.length<8){$("#f-code").focus();$("#note").textContent="Code trop court (8 caractères minimum).";return}
+    try{localStorage.setItem("room",c)}catch(x){}
+    close();boot(c);
+  }
+  else if(a==="newp")newPerson();
   else if(a==="toggle"){open=open===id?null:id;render()}
   else if(a==="inc")addMove(id,1,"");
   else if(a==="dec")addMove(id,-1,"");
